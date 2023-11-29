@@ -23,7 +23,11 @@ import jakarta.annotation.security.PermitAll;
 @EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityConfig {
-
+	
+	private static final String[] PUBLIC_URLS = new String[] {
+			"/api/user/create","/api/grocery/"
+	};
+	
 	@Autowired
 	private CustomUserDetailsService customUserDetailsService;
 	
@@ -33,17 +37,16 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 	@Bean
-	public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception
+	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception
 	{
-				    
-				 httpSecurity.authorizeHttpRequests(auth ->{
-					 auth.requestMatchers("/api/users/admin/**").hasRole("ADMIN")
-					     .requestMatchers("/api/users/getSingleUsers").hasRole("NORMAL")
-					     .requestMatchers("/api/users/createUser").permitAll()
-					     .anyRequest().authenticated();
-				 })
-				 .httpBasic(Customizer.withDefaults());
-				 return httpSecurity.build();
+				return http
+						.csrf(t -> t.disable())
+						.authorizeHttpRequests(auth->{
+							auth.requestMatchers(PUBLIC_URLS).permitAll()
+							.anyRequest().authenticated();
+						})
+						.httpBasic(Customizer.withDefaults())
+						.build();
 	}
 	
 	@Bean

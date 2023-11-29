@@ -11,7 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import ch.qos.logback.core.model.Model;
 
 @SpringBootApplication
-public class GroceryAssignmentApplication implements CommandLineRunner{
+public class GroceryAssignmentApplication {
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
@@ -25,13 +25,4 @@ public class GroceryAssignmentApplication implements CommandLineRunner{
 	{
 		return new ModelMapper();
 	}
-
-	@Override
-	public void run(String... args) throws Exception {
-			System.out.println(this.passwordEncoder.encode("Mayur@123"));
-	}
-
-	
-	
-	
 }
