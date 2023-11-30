@@ -1,5 +1,7 @@
 package com.grocery.assignment.dtos;
 
+import com.grocery.assignment.entity.Category;
+
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -26,4 +28,7 @@ public class GroceryDto {
 	private int groceryQty;
 	
 	private Boolean stock;
+	
+	
+	private Category category;
 }

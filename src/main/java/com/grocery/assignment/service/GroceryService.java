@@ -6,7 +6,7 @@ import com.grocery.assignment.dtos.GroceryDto;
 
 public interface GroceryService {
 
-	GroceryDto addNewGrocery(GroceryDto groceryDto);
+	GroceryDto addNewGrocery(GroceryDto groceryDto,Integer cId);
 	GroceryDto updateGrocery(GroceryDto groceryDto,Integer gId);
 	GroceryDto getGroceryById(Integer gId);
 	List<GroceryDto> getAllGrocery();
