@@ -7,6 +7,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.grocery.assignment.dtos.CategoryDto;
 import com.grocery.assignment.dtos.GroceryDto;
 import com.grocery.assignment.entity.Category;
 import com.grocery.assignment.entity.Grocery;
@@ -27,17 +28,26 @@ public class GroceryServiceImpl implements GroceryService{
 	@Autowired
     private ModelMapper modelMapper;
 	
+	@Autowired
+	private CategoryServiceImpl categoryServiceImpl;
+	
 	//Add new Grocery Item
 	@Override
-	public GroceryDto addNewGrocery(GroceryDto groceryDto,Integer cId) {
+	public GroceryDto addNewGrocery(GroceryDto groceryDto) {
 		
 		//Check category is exist or not
-		Category category = this.categoryRepo.findById(cId).orElseThrow(() -> new ResourceNotFoundException("Category", "Id", cId));
+		Category category = this.categoryRepo.findById(groceryDto.getCategory().getCategoryId()).orElseThrow(() -> new ResourceNotFoundException("Category", "Id", groceryDto.getCategory().getCategoryId()));
 		Grocery grocery=this.dtoToGrocery(groceryDto);
 		
 		//Set to category
-		grocery.setCategory(category);
 		Grocery savedGrocery = this.groceryRepo.save(grocery);
+		
+		
+		CategoryDto catDto=new CategoryDto();
+		
+		catDto.setCategoryId(category.getCategoryId());
+		catDto.setCategoryName(category.getCategoryName());
+		savedGrocery.setCategory(this.categoryServiceImpl.dtoToCategory(catDto));
 		return this.groceryToDto(savedGrocery);
 	}
 

@@ -39,9 +39,9 @@ public class GroceryController {
     //POST - Add Product
 	
 	@PreAuthorize("hasRole('ADMIN')")
-	@PostMapping("/addNewGrocery/{cId}")
-	public ResponseEntity<GroceryDto> addNewGrocery(@Valid @RequestBody GroceryDto groceryDto,@PathVariable Integer cId){
-		GroceryDto addNewGrocery = this.groceryService.addNewGrocery(groceryDto,cId);
+	@PostMapping("/addNewGrocery")
+	public ResponseEntity<GroceryDto> addNewGrocery(@Valid @RequestBody GroceryDto groceryDto){
+		GroceryDto addNewGrocery = this.groceryService.addNewGrocery(groceryDto);
 		return new ResponseEntity<>(addNewGrocery,HttpStatus.CREATED);
 	}
 	
