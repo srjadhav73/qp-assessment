@@ -41,13 +41,7 @@ public class GroceryServiceImpl implements GroceryService{
 		
 		//Set to category
 		Grocery savedGrocery = this.groceryRepo.save(grocery);
-		
-		
-		CategoryDto catDto=new CategoryDto();
-		
-		catDto.setCategoryId(category.getCategoryId());
-		catDto.setCategoryName(category.getCategoryName());
-		savedGrocery.setCategory(this.categoryServiceImpl.dtoToCategory(catDto));
+		savedGrocery.setCategory(category);
 		return this.groceryToDto(savedGrocery);
 	}
 
@@ -107,6 +101,11 @@ public class GroceryServiceImpl implements GroceryService{
 	private GroceryDto groceryToDto(Grocery grocery)
 	{
 		GroceryDto groceryDto=this.modelMapper.map(grocery, GroceryDto.class);
+		CategoryDto catDto=new CategoryDto();
+		
+		catDto.setCategoryId(grocery.getCategory().getCategoryId());
+		catDto.setCategoryName(grocery.getCategory().getCategoryName());
+		groceryDto.setCategory(this.categoryServiceImpl.dtoToCategory(catDto));
 		return groceryDto;
 	}
 

@@ -1,5 +1,6 @@
 package com.grocery.assignment.entity;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -20,6 +21,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -42,7 +45,9 @@ public class User implements UserDetails{
 	@ManyToMany(cascade =  CascadeType.ALL,fetch = FetchType.EAGER)
 	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role", referencedColumnName = "role_id"))
 	private Set<Role> roles = new HashSet<>();
-
+	
+	@OneToOne(mappedBy="user")
+	private List<Cart> cart=new ArrayList<>();
 	
 	
 	@Override

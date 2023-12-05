@@ -1,6 +1,7 @@
 package com.grocery.assignment.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -26,4 +27,8 @@ public class CustomUserDetailsService implements UserDetailsService{
 		return user;
 	}
 
+	public String currentUser()
+	{
+		return SecurityContextHolder.getContext().getAuthentication().getName();
+	}
 }
