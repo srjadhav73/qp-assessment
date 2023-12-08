@@ -1,6 +1,5 @@
 package com.grocery.assignment.entity;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -11,6 +10,8 @@ import org.hibernate.annotations.ManyToAny;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import com.grocery.assignment.dtos.UserDto;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -46,10 +47,6 @@ public class User implements UserDetails{
 	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role", referencedColumnName = "role_id"))
 	private Set<Role> roles = new HashSet<>();
 	
-	@OneToOne(mappedBy="user")
-	private List<Cart> cart=new ArrayList<>();
-	
-	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		
@@ -84,5 +81,16 @@ public class User implements UserDetails{
 	public boolean isEnabled() {
 		// TODO Auto-generated method stub
 		return true;
+	}
+	
+	
+	public UserDto getDto(User user) {
+		
+		UserDto userDto =new UserDto();
+		userDto.setId(user.getId());
+		userDto.setEmail(user.getEmail());
+		userDto.setName(user.getName());
+		
+		return userDto;
 	}
 }

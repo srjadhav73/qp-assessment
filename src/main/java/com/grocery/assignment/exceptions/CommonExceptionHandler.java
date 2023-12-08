@@ -2,9 +2,11 @@ package com.grocery.assignment.exceptions;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -34,5 +36,28 @@ public class CommonExceptionHandler {
 			respMap.put(fieldName, msg);
 		});
 		return new ResponseEntity<Map<String,String>>(respMap,HttpStatus.BAD_REQUEST);
+	}
+	
+	@ExceptionHandler(NoSuchElementException.class)
+	public  ResponseEntity<ApiResponse> noSuchElementException(NoSuchElementException ex)
+	{
+		String msg=ex.getMessage();
+		ApiResponse apiResponse= new ApiResponse(msg,false);
+		return new ResponseEntity<ApiResponse>(apiResponse,HttpStatus.NOT_FOUND);
+	}
+	
+	@ExceptionHandler(NullPointerException.class)
+	public  ResponseEntity<ApiResponse> nullPointerException(NullPointerException ex)
+	{
+		String msg=ex.getMessage();
+		ApiResponse apiResponse= new ApiResponse(msg,false);
+		return new ResponseEntity<ApiResponse>(apiResponse,HttpStatus.NOT_FOUND);
+	}
+	@ExceptionHandler(AccessDeniedException.class)
+	public  ResponseEntity<ApiResponse> accessDeniedException(AccessDeniedException ex)
+	{
+		String msg=ex.getMessage();
+		ApiResponse apiResponse= new ApiResponse(msg,false);
+		return new ResponseEntity<ApiResponse>(apiResponse,HttpStatus.NOT_FOUND);
 	}
 }

@@ -46,6 +46,7 @@ public class SecurityConfig {
 							.anyRequest().authenticated();
 						})
 						.httpBasic(Customizer.withDefaults())
+						.authenticationProvider(authenticationProvider())
 						.build();
 	}
 	

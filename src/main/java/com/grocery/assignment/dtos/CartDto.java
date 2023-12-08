@@ -20,7 +20,6 @@ public class CartDto {
 	private int quantity;
 	private double totalPrice;
 	private Date createdDate;
-	
 	private int userId;
-	
+	private String productName;
 }

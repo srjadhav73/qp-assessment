@@ -26,4 +26,6 @@ public class UserDto {
 	@Size(min =5 ,message = "Password must be min 5 characters !!")
 	@Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{8,}$",message = "Password not valid")
 	private String password;
+	
+	private int roleId;
 }
